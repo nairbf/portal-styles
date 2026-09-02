@@ -2413,55 +2413,215 @@ strong, b { font-weight: 600; }
 }
 
 /* --------------------------------------------------------------------------
-   6b. Music request tiles
-   #djep-addsongimage a, #djep-musicrequestsimage a, #djep-specialsongsimage a,
-   #djep-printrequestsimage a, #djep-guestrequestsimage a are 150x150 <a>
-   elements whose only content is a background PNG. Framed, not replaced —
-   the artwork carries its own label, so nothing is added on top of it.
+   6b. Music request tiles — rebuilt
+   Real markup: .djep-managemusicbox > table > tr > td#djep-XXXimage > a
+   The <a> elements are EMPTY — their label is baked into a 150px PNG. So the
+   PNG goes, an inline-SVG icon and a real text label come in, and the row
+   becomes a responsive grid: four across, two-by-two on a phone.
+   Side benefit: those links currently have no accessible name at all.
    -------------------------------------------------------------------------- */
+
+.djep-managemusicbox table {
+  display: block;          /* a table box sizes to content; a block honours 100% */
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  border-collapse: separate;
+}
+.djep-managemusicbox tbody { display: block; }
+.djep-managemusicbox tbody tr {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.djep-managemusicbox tbody td {
+  display: block;
+  flex: 1 1 150px;
+  max-width: 190px;
+  padding: 0;
+}
 
 #djep-addsongimage a,
 #djep-musicrequestsimage a,
-#djep-specialsongsimage a,
+#djep-guestrequestsimage a,
 #djep-printrequestsimage a,
-#djep-guestrequestsimage a {
+#djep-specialsongsimage a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  min-height: 132px;
+  padding: 20px 12px;
+  background-image: none;
+  background-color: var(--sde-paper);
+  border: 1px solid var(--sde-border);
+  border-radius: 14px;
+  box-shadow: var(--sde-shadow-sm);
+  color: var(--sde-navy);
+  font-family: var(--sde-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .18s ease, border-color .18s ease,
+              box-shadow .18s ease, transform .18s ease;
+}
+
+#djep-addsongimage a::before,
+#djep-musicrequestsimage a::before,
+#djep-guestrequestsimage a::before,
+#djep-printrequestsimage a::before,
+#djep-specialsongsimage a::before {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 34px;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 132px 132px;
-  border: 1px solid var(--sde-border);
-  border-radius: 12px;
-  box-shadow: var(--sde-shadow-sm);
-  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+  background-size: contain;
 }
 
 #djep-addsongimage a:hover,
 #djep-musicrequestsimage a:hover,
-#djep-specialsongsimage a:hover,
+#djep-guestrequestsimage a:hover,
 #djep-printrequestsimage a:hover,
-#djep-guestrequestsimage a:hover {
-  border-color: var(--sde-gold);
+#djep-specialsongsimage a:hover {
   background-color: var(--sde-gold-pale);
+  border-color: var(--sde-gold);
   box-shadow: var(--sde-shadow);
+  transform: translateY(-2px);
 }
 
 #djep-addsongimage a:focus-visible,
 #djep-musicrequestsimage a:focus-visible,
-#djep-specialsongsimage a:focus-visible,
+#djep-guestrequestsimage a:focus-visible,
 #djep-printrequestsimage a:focus-visible,
-#djep-guestrequestsimage a:focus-visible {
+#djep-specialsongsimage a:focus-visible {
   outline: 2px solid var(--sde-gold);
   outline-offset: 3px;
 }
 
-@media (max-width: 640px) {
+#djep-addsongimage a::before { background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C6A15B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v8M8 12h8'/%3E%3C/svg%3E"); }
+#djep-addsongimage a::after  { content: "Add Requests"; }
+#djep-musicrequestsimage a::before { background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C6A15B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01'/%3E%3C/svg%3E"); }
+#djep-musicrequestsimage a::after  { content: "View Requests"; }
+#djep-guestrequestsimage a::before { background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C6A15B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M22 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"); }
+#djep-guestrequestsimage a::after  { content: "Guest Requests"; }
+#djep-printrequestsimage a::before { background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C6A15B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9V2h12v7'/%3E%3Cpath d='M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2'/%3E%3Crect x='6' y='14' width='12' height='8' rx='1'/%3E%3C/svg%3E"); }
+#djep-printrequestsimage a::after  { content: "Print Requests"; }
+#djep-specialsongsimage a::before { background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C6A15B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18V5l10-2v13'/%3E%3Ccircle cx='6' cy='18' r='3'/%3E%3Ccircle cx='16' cy='16' r='3'/%3E%3C/svg%3E"); }
+#djep-specialsongsimage a::after  { content: "Special Songs"; }
+
+@media (prefers-reduced-motion: reduce) {
   #djep-addsongimage a,
-  #djep-musicrequestsimage a,
-  #djep-specialsongsimage a,
-  #djep-printrequestsimage a,
-  #djep-guestrequestsimage a {
-    height: 112px;
-    width: 112px;
-    background-size: 96px 96px;
+#djep-musicrequestsimage a,
+#djep-guestrequestsimage a,
+#djep-printrequestsimage a,
+#djep-specialsongsimage a { transition: none; }
+  #djep-addsongimage a:hover,
+#djep-musicrequestsimage a:hover,
+#djep-guestrequestsimage a:hover,
+#djep-printrequestsimage a:hover,
+#djep-specialsongsimage a:hover { transform: none; }
+}
+
+@media (max-width: 560px) {
+  .djep-managemusicbox tbody td { flex: 1 1 calc(50% - 7px); max-width: none; }
+  #djep-addsongimage a,
+#djep-musicrequestsimage a,
+#djep-guestrequestsimage a,
+#djep-printrequestsimage a,
+#djep-specialsongsimage a { min-height: 112px; padding: 16px 8px; font-size: 12px; }
+  #djep-addsongimage a::before,
+#djep-musicrequestsimage a::before,
+#djep-guestrequestsimage a::before,
+#djep-printrequestsimage a::before,
+#djep-specialsongsimage a::before { width: 28px; height: 28px; }
+}
+
+/* --------------------------------------------------------------------------
+   6c. Plan My Event section cards
+   Each planning section is a .djep-*box; give them one consistent card.
+   -------------------------------------------------------------------------- */
+
+.djep-planneraccessbox,
+.djep-managemusicbox,
+.djep-othertoolsbox {
+  background-color: var(--sde-paper);
+  border: 1px solid var(--sde-border-soft);
+  border-radius: 12px;
+}
+
+.djep-planneraccessbox,
+.djep-managemusicbox,
+.djep-planningformsbox,
+.djep-timelinebox,
+.djep-othertoolsbox {
+  margin: 0 0 18px;
+  padding: 2px 18px 20px;
+}
+
+/* Titlebars sit inside those cards now, so pull their spacing in. */
+.djep-planneraccessbox > .djep-titlebar,
+.djep-managemusicbox   > .djep-titlebar,
+.djep-planningformsbox > .djep-titlebar,
+.djep-timelinebox      > .djep-titlebar,
+.djep-othertoolsbox    > .djep-titlebar {
+  margin: 16px auto 18px;
+}
+
+/* Lockout notice reads as information, not a warning. */
+#djep-lockouttable td {
+  color: var(--sde-navy-soft);
+  font-size: 13px;
+}
+
+/* The document icon beside each form row. */
+.djep-planningformsbox img,
+.djep-timelinebox img,
+.djep-othertoolsbox img { max-width: 40px; height: auto; opacity: .85; }
+
+.djep-planningformsbox td,
+.djep-timelinebox td,
+.djep-othertoolsbox td { font-size: 14px; font-weight: 600; color: var(--sde-navy); }
+
+/* "Event Details" lives inside the <h2>. Float it right and contain the
+   float, or the next card slides up underneath it. */
+h2.djep-h2 > .djep-eventdetailsbutton { float: right; margin: 2px 0 0 16px; }
+h2.djep-h2::after { content: ""; display: block; clear: both; }
+
+/* Mobile: DJEP hardcodes <td width="100"> and width="250" on the form rows,
+   which together exceed a phone viewport and push the page sideways. Let the
+   cells size themselves, and don't let the floated Event Details go full width. */
+@media (max-width: 640px) {
+  .djep-planningformsbox table,
+  .djep-timelinebox table,
+  .djep-othertoolsbox table { width: 100% !important; }
+
+  .djep-planningformsbox td,
+  .djep-timelinebox td,
+  .djep-othertoolsbox td { width: auto !important; }
+
+  .djep-planningformsbox img,
+  .djep-timelinebox img,
+  .djep-othertoolsbox img { max-width: 28px; }
+
+  .djep-readviewbutton { min-height: 38px; padding: 9px 14px; margin: 3px 2px; }
+}
+
+@media (max-width: 900px) {
+  h2.djep-h2 > .djep-eventdetailsbutton {
+    float: none;
+    display: block;        /* own line, so it can't crowd the date */
+    width: -webkit-fit-content;
+    width: fit-content;
+    margin: 12px 0 0;
   }
 }
 
