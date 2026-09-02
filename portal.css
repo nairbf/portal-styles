@@ -2680,6 +2680,26 @@ body.djep-body textarea:focus {
 .djep-submit input:hover { background: var(--sde-navy-deep); }
 
 /* --------------------------------------------------------------------------
+   12. Logo
+   DJEP already emits your logo as <img class="custom_logo_image"> inside
+   <p id="logo_p">. This styles that existing image rather than adding a
+   second one, so nothing doubles up.
+   -------------------------------------------------------------------------- */
+
+#logo_p {
+  margin: 0 auto;
+  padding: 22px 16px 6px;
+  text-align: center;
+}
+
+.custom_logo_image {
+  max-width: 100%;
+  max-height: 96px;
+  width: auto;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
    11. Motion and print courtesies
    -------------------------------------------------------------------------- */
 
@@ -2733,15 +2753,16 @@ body.djep-body textarea:focus {
 }
 
 /* --------------------------------------------------------------------------
-   LOGO — uncomment and paste your logo URL to replace the text header.
-   Must be an https:// URL, same as this stylesheet.
+   FALLBACK — only if your DJEP theme does NOT already print the logo.
+   Uncomment to paint it into the header instead. Leave commented if the
+   logo already appears, or you will get two of them.
 
 #djep-header {
-  background-image: url(https://YOUR-LOGO-URL-HERE.png);
+  background-image: url(https://img1.wsimg.com/isteam/ip/db86461f-89f4-491f-b42e-bacb102c06bf/sde%20logo%202.png/:/rs=w:200,h:200,cg:true,m/cr=w:200,h:200/qt=q:95);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 90px;
+  height: 96px;
   text-indent: -9999px;
   overflow: hidden;
 }
