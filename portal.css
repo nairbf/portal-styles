@@ -1999,8 +1999,10 @@ body.djep-body { background-image: none !important; }
 .djep-timelinebox,
 .djep-ourcontactinfobox,
 .djep-latestemailsbox,
+.djep-upcomingmeetingsbox,
 .djep-contactbox,
 .djep-accordion {
+  box-sizing: border-box;
   background-color: var(--sde-paper);
   border: 1px solid var(--sde-border-soft);
   border-radius: 10px;
@@ -2563,6 +2565,7 @@ strong, b { font-weight: 600; }
 .djep-planningformsbox,
 .djep-timelinebox,
 .djep-othertoolsbox {
+  box-sizing: border-box;
   margin: 0 0 18px;
   padding: 2px 18px 20px;
 }
@@ -3306,6 +3309,137 @@ body.djep-body textarea:focus {
   .djep-musicsearchform { max-width: 100%; }
   .djep-artistsongbuttons,
   .djep-artistsongbuttonswide { min-width: 30px; font-size: 13px; padding: 8px 3px; }
+}
+
+/* ==========================================================================
+   14. MOBILE
+   NOTE: none of this runs on a phone unless a viewport meta tag exists.
+   DJEP does not emit one, so mobile browsers lay the page out at 980px and
+   scale it down — every query below would silently never match. The tag is
+   injected by portal-enhancements.js (DJEP > Custom Scripting Code).
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+  /* Logo eats half the first screen at full size. */
+  #djep-header { padding: 12px 0 4px; }
+  #djep-header img,
+  #djep-header .custom_logo_image { max-height: 120px; width: auto; }
+
+  /* Nav: horizontal scroll without a visible bar. */
+  #djep-navigation {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #djep-navigation::-webkit-scrollbar { display: none; }
+
+  /* Buttons inside a heading must not go full width — they sit beside the
+     title, not under it. (The generic mobile rule below 900px does.) */
+  h2.djep-h2 > .djep-planeventbutton,
+  h2.djep-h2 > .djep-eventdetailsbutton,
+  h2.djep-h2 > .djep-changebutton,
+  h1.djep-h1 > .djep-planeventbutton,
+  h1.djep-h1 > .djep-eventdetailsbutton {
+    width: -webkit-fit-content !important;
+    width: fit-content !important;
+    display: block;          /* own line — inline collides with the title */
+    float: none;
+    margin: 12px 0 0;
+    padding: 10px 16px;
+  }
+
+  /* ---- Music: the A–Z index ----
+     DJEP lays the letters out as 14 table cells in one row (616px wide).
+     #djep-content is overflow:hidden, so on a phone N–Z were CLIPPED, not
+     scrollable. Rows become wrapping flex lines instead. */
+  .djep-tabs-all > table:first-of-type,
+  .djep-tabs-all > table:first-of-type > tbody {
+    display: block;
+    width: 100% !important;
+  }
+
+  .djep-tabs-all > table:first-of-type > tbody > tr {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .djep-tabs-all > table:first-of-type > tbody > tr > td {
+    display: block;
+    width: auto !important;
+    padding: 0 !important;
+    text-align: center;
+  }
+
+  /* Fixed box (the original sets width:28px) so the two letter rows wrap to
+     the same count per line instead of leaving orphans mid-row. */
+  .djep-artistsongbuttons,
+  .djep-artistsongbuttonswide {
+    box-sizing: border-box;
+    width: 40px;
+    min-width: 0;
+    min-height: 40px;      /* a real tap target */
+    margin: 0;
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .djep-artistsongbuttonswide { width: 56px; }
+
+  /* Search row: label, field and button stack cleanly. */
+  .djep-musicsearchform { max-width: 100%; width: 100%; }
+  .djep-searchbutton { width: auto; min-height: 42px; }
+
+  /* Tab strip scrolls rather than wrapping into a ragged block. */
+  #tabs > .ui-tabs-nav.ui-widget-header {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  #tabs > .ui-tabs-nav.ui-widget-header::-webkit-scrollbar { display: none; }
+
+  /* Playlist panels: shorter, so the page isn't one long scroll of empties. */
+  #requests_accordion .ui-accordion-content [id^="request_table_div_"] {
+    height: 180px !important;
+  }
+
+  /* Modals that DJEP sizes for desktop. */
+  #edit_song_div, #preview_song_modal_div,
+  #confirm_song_deletion_div, #edit_playlist_window {
+    max-width: 94vw;
+    box-sizing: border-box;
+  }
+  #edit_song_div table, #edit_playlist_window table { width: 100% !important; }
+
+  /* Results rows */
+  .djep-musicresultstable td { padding: 8px 4px; font-size: 13px; }
+
+  /* ---- Home: side-by-side boxes are float:left;width:48% in the original,
+     which leaves them at 48% on a phone. Stack them. ---- */
+  .djep-latestemailsbox,
+  .djep-upcomingmeetingsbox {
+    float: none;
+    box-sizing: border-box;   /* width:100% + padding would overflow otherwise */
+    width: 100%;
+    margin: 0 0 16px;
+    padding: 2px 14px 14px;
+  }
+
+  /* Event card columns */
+  .djep-singleeventdiv .col-xs-12,
+  .djep-singleeventdiv .col-sm-6,
+  .djep-singleeventdiv .col-sm-5 { width: 100%; float: none; }
+  .djep-singleeventdiv p[align="right"] { text-align: left; }
+}
+
+/* Very narrow phones */
+@media (max-width: 380px) {
+  .djep-artistsongbuttons { min-width: 34px; padding: 9px 4px; font-size: 13px; }
+  .djep-artistsongbuttonswide { min-width: 48px; }
+  #djep-content, #djep-guestrequestcontent { padding-left: 12px; padding-right: 12px; }
 }
 
 /* ==========================================================================
