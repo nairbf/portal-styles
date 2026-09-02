@@ -1,6 +1,6 @@
 @import url(https://djep21.com/clients/includes/stylesheet_updates.css);
 @import url(https://fonts.googleapis.com/css?family=Ropa+Sans);
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Manrope:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Manrope:wght@400;500;600;700&display=swap');
 @charset "utf-8";
 /* StyleSheet - Default Style Version 24022012.0029 */
 html {overflow-y: scroll; text-decoration:none;}
@@ -1916,107 +1916,134 @@ width: 95%;
    Appended override layer. Everything above this line is the original DJEP
    stylesheet, untouched. Everything below re-skins it.
 
-   Palette and type come from _config/visual-style.md:
-   white ground, black type, gold as the only accent.
+   Ivory ground, white cards, deep navy, champagne gold.
+   Visual refinement only — no layout, markup, or functional changes.
 
    To revert completely: delete from this line to the end of the file.
    ========================================================================== */
 
 :root {
-  --sde-paper:      #FFFFFF;
-  --sde-wash:       #F7F4EE;
-  --sde-wash-2:     #FBF9F5;
-  --sde-ink:        #17150F;
-  --sde-muted:      #6E6759;
-  --sde-faint:      #9A9285;
-  --sde-line:       #E4DED1;
-  --sde-line-soft:  #EFEAE0;
-  --sde-gold:       #99741B;
-  --sde-gold-leaf:  #C9A64B;
-  --sde-gold-wash:  #F6EFDC;
+  /* Core palette */
+  --sde-ivory:      #F7F3EA;   /* page background */
+  --sde-paper:      #FFFFFF;   /* content cards */
+  --sde-navy:       #102A3A;   /* deep navy */
+  --sde-gold:       #C6A15B;   /* champagne gold */
+  --sde-text:       #171717;   /* dark text */
+  --sde-border:     #E4D4B2;   /* soft gold border */
+
+  /* Derived tones, all from the six above */
+  --sde-navy-deep:  #0B1E29;   /* navy hover */
+  --sde-navy-soft:  #3D5665;   /* muted navy for secondary text */
+  --sde-gold-deep:  #A8843F;   /* gold hover / gold text on white */
+  --sde-gold-pale:  #F3E9D6;   /* pale gold hover wash */
+  --sde-ivory-2:    #FBF8F2;   /* zebra rows, insets */
+  --sde-border-soft:#EFE4CC;   /* hairline */
+
+  /* Semantic — used only where the portal states a fact */
   --sde-paid:       #2F6B4F;
-  --sde-paid-wash:  #E8F1EB;
+  --sde-paid-wash:  #EAF2EC;
   --sde-due:        #9C5511;
   --sde-due-wash:   #FBEEE0;
   --sde-alert:      #A32E22;
   --sde-alert-wash: #FBEAE7;
-  --sde-sans:       "Manrope", "Trebuchet MS", Arial, Helvetica, sans-serif;
-  --sde-serif:      "Bodoni Moda", Georgia, "Times New Roman", serif;
-  --sde-radius:     12px;
-  --sde-shadow:     0 1px 2px rgba(23,21,15,.05), 0 10px 30px -12px rgba(23,21,15,.16);
+
+  --sde-sans:   "Manrope", "Trebuchet MS", Arial, Helvetica, sans-serif;
+  --sde-serif:  "Bodoni Moda", Georgia, "Times New Roman", serif;
+
+  --sde-radius: 12px;
+  --sde-btn-radius: 9px;
+  --sde-shadow:    0 1px 2px rgba(16,42,58,.04), 0 12px 32px -14px rgba(16,42,58,.18);
+  --sde-shadow-sm: 0 1px 2px rgba(16,42,58,.05), 0 6px 16px -10px rgba(16,42,58,.20);
 }
 
 /* --------------------------------------------------------------------------
-   1. Ground and type
+   1. Ground, cards, depth
    -------------------------------------------------------------------------- */
 
 body.djep-body {
-  background-color: var(--sde-wash);
+  background-color: var(--sde-ivory);
   background-image: none;
-  color: var(--sde-ink);
+  color: var(--sde-text);
   font-family: var(--sde-sans);
   font-size: 14px;
-  line-height: 1.55;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-body.djep-body[style*="background-color:"] { background-color: var(--sde-wash); }
+body.djep-body[style*="background-color:"] { background-color: var(--sde-ivory); }
 
-#djep-page { background: transparent; }
+#djep-page  { background: transparent; }
+#djep-header{ padding: 20px 0 8px; background-color: transparent; }
 
-#djep-header {
-  padding: 18px 0 6px;
-  background-color: transparent;
-}
-
-/* Panel that holds every page */
+/* The white card every page sits inside */
 #djep-content,
 #djep-guestrequestcontent {
-  border: 1px solid var(--sde-line);
+  border: 1px solid var(--sde-border);
   border-radius: var(--sde-radius);
   box-shadow: var(--sde-shadow);
   background: var(--sde-paper);
-  padding: 6px 26px 30px;
+  padding: 10px 30px 36px;
 }
 
-/* Headings — retires the brick red (#af3737) */
-h1.djep-h1 {
-  font-family: var(--sde-serif);
-  font-weight: 400;
-  font-size: 34px;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
-  color: var(--sde-ink);
-  margin: 24px 0 14px;
+/* Inset panels — white on ivory, never a heavy dark panel */
+.djep-planningformsbox,
+.djep-timelinebox,
+.djep-ourcontactinfobox,
+.djep-latestemailsbox,
+.djep-contactbox,
+.djep-accordion {
+  background-color: var(--sde-paper);
+  border: 1px solid var(--sde-border-soft);
+  border-radius: 10px;
 }
-h2.djep-h2 {
-  font-family: var(--sde-serif);
-  font-weight: 400;
-  font-size: 25px;
-  color: var(--sde-ink);
-  margin: 22px 0 12px;
-}
-h3.djep-h3 {
-  font-family: var(--sde-sans);
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.01em;
-  color: var(--sde-ink);
-}
-p.djep-p-standard { font-size: 15px; color: var(--sde-ink); }
-
-a { color: var(--sde-gold); }
-a:hover { color: var(--sde-ink); }
 
 /* --------------------------------------------------------------------------
-   2. Navigation — one accent instead of eight
+   2. Typography — serif headings with real weight
+   -------------------------------------------------------------------------- */
+
+h1.djep-h1 {
+  font-family: var(--sde-serif);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--sde-navy);
+  margin: 26px 0 16px;
+}
+
+h2.djep-h2 {
+  font-family: var(--sde-serif);
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 1.2;
+  color: var(--sde-navy);
+  margin: 26px 0 12px;
+}
+
+h3.djep-h3 {
+  font-family: var(--sde-serif);
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--sde-gold-deep);
+  margin: 20px 0 10px;
+}
+
+p.djep-p-standard { font-size: 15px; color: var(--sde-text); }
+
+a         { color: var(--sde-gold-deep); }
+a:hover   { color: var(--sde-navy); }
+
+strong, b { font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   3. Navigation — navy text, gold active underline, pale gold hover
    -------------------------------------------------------------------------- */
 
 #djep-navbar {
   width: auto;
   max-width: 1040px;
   height: auto;
-  margin: 14px auto 0;
+  margin: 16px auto 0;
   padding: 0 4px;
 }
 
@@ -2024,9 +2051,9 @@ a:hover { color: var(--sde-ink); }
   left: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 4px;
   padding: 0;
-  border-bottom: 1px solid var(--sde-line);
+  border-bottom: 1px solid var(--sde-border);
 }
 
 #djep-navigation li {
@@ -2039,24 +2066,24 @@ a:hover { color: var(--sde-ink); }
 #djep-navigation li a {
   display: block;
   margin: 0;
-  padding: 12px 15px 11px;
+  padding: 12px 16px 10px;
   background-color: transparent;
   border: 0;
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 8px 8px 0 0;
   font-family: var(--sde-sans);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
-  line-height: 1.25;
-  color: var(--sde-muted);
-  transition: color .18s ease, border-color .18s ease;
+  line-height: 1.3;
+  color: var(--sde-navy);
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
 }
 
-/* The nested <span> was white — invisible on a white ground */
+/* This span was white — invisible on a light ground */
 #djep-navigation li a span {
   padding-top: 2px;
   font-family: var(--sde-sans);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: inherit;
   text-transform: none;
@@ -2064,8 +2091,9 @@ a:hover { color: var(--sde-ink); }
 
 #djep-navigation li a:hover,
 #djep-navigation li a:focus {
-  color: var(--sde-ink);
-  border-bottom-color: var(--sde-line);
+  background-color: var(--sde-gold-pale);
+  color: var(--sde-navy);
+  border-bottom-color: var(--sde-border);
 }
 
 #djep-navigation li a:focus-visible {
@@ -2074,7 +2102,7 @@ a:hover { color: var(--sde-ink); }
 }
 
 /* Neutralize the eight per-item hover colors and the tilt.
-   Matches the original selectors exactly so specificity ties and this wins. */
+   Mirrors the original selectors exactly so specificity ties and this wins. */
 #djep-navigation li:nth-child(1):hover a,
 #djep-navigation li:nth-child(2):hover a,
 #djep-navigation li:nth-child(3):hover a,
@@ -2083,9 +2111,9 @@ a:hover { color: var(--sde-ink); }
 #djep-navigation li:nth-child(6):hover a,
 #djep-navigation li:nth-child(7):hover a,
 #djep-navigation li:nth-child(8):hover a {
-  background-color: transparent;
-  color: var(--sde-ink);
-  border-bottom-color: var(--sde-gold-leaf);
+  background-color: var(--sde-gold-pale);
+  color: var(--sde-navy);
+  border-bottom-color: var(--sde-gold);
   -webkit-transform: none;
   -moz-transform: none;
   -o-transform: none;
@@ -2094,8 +2122,24 @@ a:hover { color: var(--sde-ink); }
 
 #djep-navigation li:hover { color: inherit; }
 
+/* Active page — gold underline, navy text.
+   DJEP marks the current item differently across themes, so cover the
+   common cases: an .active/.selected/.current class, or aria-current. */
+#djep-navigation li.active a,
+#djep-navigation li.selected a,
+#djep-navigation li.current a,
+#djep-navigation li a.active,
+#djep-navigation li a.selected,
+#djep-navigation li a.current,
+#djep-navigation li a[aria-current] {
+  background-color: var(--sde-gold-pale);
+  color: var(--sde-navy);
+  border-bottom-color: var(--sde-gold);
+  font-weight: 700;
+}
+
 /* --------------------------------------------------------------------------
-   3. Section headings — flat rules, not grey bars with red text
+   4. Section headings
    -------------------------------------------------------------------------- */
 
 .djep-titlebar,
@@ -2103,74 +2147,73 @@ a:hover { color: var(--sde-ink); }
 .djep-titlebarsmaller {
   background-color: transparent;
   border-width: 0 0 1px 0;
-  border-color: var(--sde-line);
+  border-color: var(--sde-border);
   border-radius: 0;
-  color: var(--sde-ink);
+  color: var(--sde-navy);
   font-family: var(--sde-sans);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 10px 0 8px !important;
-  margin: 26px auto 14px;
+  padding: 11px 0 9px !important;
+  margin: 30px auto 16px;
   width: 100%;
 }
 
-/* Notices, confirmations, alerts — meaning stays, decoration goes */
 .djep-titlebarconfirm,
 .djep-titlebarmusicconfirm {
   background: var(--sde-paid-wash);
   background-image: none;
   filter: none;
-  border: 1px solid var(--sde-line);
+  border: 1px solid var(--sde-border-soft);
   border-left: 3px solid var(--sde-paid);
-  border-radius: 8px;
+  border-radius: 9px;
   color: var(--sde-paid);
   font-family: var(--sde-sans);
   font-weight: 600;
-  padding: 11px 15px;
+  padding: 12px 16px;
 }
 
 .djep-titlebarnotices,
 .djep-songrequesttotals {
-  background-color: var(--sde-gold-wash);
-  border: 1px solid var(--sde-line);
-  border-left: 3px solid var(--sde-gold-leaf);
-  border-radius: 8px;
-  color: var(--sde-ink);
+  background-color: var(--sde-gold-pale);
+  border: 1px solid var(--sde-border);
+  border-left: 3px solid var(--sde-gold);
+  border-radius: 9px;
+  color: var(--sde-text);
   font-family: var(--sde-sans);
-  padding: 11px 15px;
+  padding: 12px 16px;
 }
 
 .djep-titlebarsmallalert,
 .djep-titlebarlockout {
   background-color: var(--sde-alert-wash);
   background-image: none;
-  border: 1px solid var(--sde-line);
+  border: 1px solid var(--sde-border-soft);
   border-left: 3px solid var(--sde-alert);
-  border-radius: 8px;
+  border-radius: 9px;
   color: var(--sde-alert);
   font-family: var(--sde-sans);
   font-weight: 600;
-  padding: 11px 15px;
+  padding: 12px 16px;
 }
 
 /* --------------------------------------------------------------------------
-   4. Payment rows — four highlight colors become one meaning each
+   5. Payment rows — semantic color only
    Originals use !important, so these must too.
    -------------------------------------------------------------------------- */
 
 .djep-totalfeerow,
 .djep-totalfeerow span {
-  background-color: var(--sde-wash-2) !important;
-  color: var(--sde-ink);
+  background-color: var(--sde-ivory-2) !important;
+  color: var(--sde-navy);
   font-weight: 600;
   text-transform: none;
 }
 
 .djep-totaldepositrow {
-  background-color: var(--sde-wash-2) !important;
-  color: var(--sde-muted);
+  background-color: var(--sde-ivory-2) !important;
+  color: var(--sde-navy-soft);
   font-weight: 600;
   text-transform: none;
 }
@@ -2178,7 +2221,7 @@ a:hover { color: var(--sde-ink); }
 .djep-balancepaidrow {
   background-color: var(--sde-paid-wash) !important;
   color: var(--sde-paid);
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -2186,14 +2229,14 @@ a:hover { color: var(--sde-ink); }
 .djep-balanceduerow {
   background-color: var(--sde-due-wash) !important;
   color: var(--sde-due);
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
 /* --------------------------------------------------------------------------
-   5. Buttons — kill the gradients, keep the hierarchy
-   Primary (pay, submit) = ink. Secondary = outlined.
+   6. Buttons — one shared shape, three levels of emphasis
+   Shared geometry first so all three match exactly.
    -------------------------------------------------------------------------- */
 
 .djep-actionbutton,
@@ -2219,91 +2262,133 @@ a:hover { color: var(--sde-ink); }
   -moz-box-shadow: none;
   box-shadow: none;
   text-shadow: none;
+  display: inline-block;
+  box-sizing: border-box;
+  min-height: 42px;
+  padding: 11px 20px;
+  margin: 4px 6px 4px 0;
+  border: 1px solid transparent;
+  border-radius: var(--sde-btn-radius);
   font-family: var(--sde-sans);
+  font-size: 14px;
   font-weight: 600;
-  border-radius: 8px;
-  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+  line-height: 18px;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .18s ease, color .18s ease,
+              border-color .18s ease, box-shadow .18s ease;
 }
 
-/* Secondary — the default */
-.djep-actionbutton,
+/* PRIMARY — "Plan My Event": champagne gold, dark text */
+.djep-planeventbutton {
+  background-color: var(--sde-gold);
+  border-color: var(--sde-gold);
+  color: var(--sde-text);
+  box-shadow: var(--sde-shadow-sm);
+}
+.djep-planeventbutton:hover {
+  background-color: var(--sde-gold-deep);
+  background-image: none;
+  filter: none;
+  border-color: var(--sde-gold-deep);
+  color: #FFFFFF;
+}
+
+/* SECONDARY — "Event Details": ivory, navy border, navy text */
 .djep-eventdetailsbutton,
+.djep-actionbutton,
 .djep-changebutton,
 .djep-searchbutton,
 .djep-readviewbutton,
 .djep-clipboardbutton,
-.djep-songideabutton,
-.djep-specialsongbutton,
-.djep-paginatebutton {
+.djep-songideabutton {
   background-color: var(--sde-paper);
-  border: 1px solid var(--sde-line);
-  color: var(--sde-ink);
-  padding: 8px 15px;
+  border-color: var(--sde-navy);
+  color: var(--sde-navy);
 }
-
-.djep-actionbutton:hover,
 .djep-eventdetailsbutton:hover,
+.djep-actionbutton:hover,
 .djep-changebutton:hover,
 .djep-searchbutton:hover,
 .djep-readviewbutton:hover,
 .djep-clipboardbutton:hover,
-.djep-songideabutton:hover,
-.djep-specialsongbutton:hover,
-.djep-paginatebutton:hover {
-  background-color: var(--sde-wash-2);
+.djep-songideabutton:hover {
+  background-color: var(--sde-ivory);
   background-image: none;
   filter: none;
-  border-color: var(--sde-gold-leaf);
-  color: var(--sde-gold);
+  border-color: var(--sde-navy);
+  color: var(--sde-navy-deep);
 }
 
-/* Primary — money and commitment */
+/* COMMITTING — "Make a Payment" and submits: deep navy, white text */
 .djep-paymentbutton,
-.djep-planeventbutton,
 .djep-guestsubmit,
 .djep-guestsubmitrequests {
-  background-color: var(--sde-ink);
-  border: 1px solid var(--sde-ink);
-  color: var(--sde-paper);
-  padding: 9px 18px;
+  background-color: var(--sde-navy);
+  border-color: var(--sde-navy);
+  color: #FFFFFF;
+  box-shadow: var(--sde-shadow-sm);
 }
-
 .djep-paymentbutton:hover,
-.djep-planeventbutton:hover,
 .djep-guestsubmit:hover,
 .djep-guestsubmitrequests:hover {
-  background-color: var(--sde-gold);
+  background-color: var(--sde-navy-deep);
   background-image: none;
   filter: none;
-  border-color: var(--sde-gold);
-  color: var(--sde-paper);
+  border-color: var(--sde-navy-deep);
+  color: #FFFFFF;
 }
 
-/* Quiet exits */
+/* Quiet exits and small utility buttons */
 .djep-logoutbutton,
 .djep-guestlogout {
   background-color: transparent;
-  border: 1px solid var(--sde-line);
-  color: var(--sde-muted);
-  padding: 7px 14px;
+  border-color: var(--sde-border);
+  color: var(--sde-navy-soft);
+  min-height: 38px;
+  padding: 9px 16px;
 }
-
 .djep-logoutbutton:hover,
 .djep-guestlogout:hover {
-  background-color: var(--sde-wash-2);
+  background-color: var(--sde-gold-pale);
   background-image: none;
   filter: none;
-  color: var(--sde-ink);
+  border-color: var(--sde-border);
+  color: var(--sde-navy);
+}
+
+.djep-specialsongbutton,
+.djep-paginatebutton {
+  background-color: var(--sde-paper);
+  border-color: var(--sde-border);
+  color: var(--sde-navy);
+  min-height: 34px;
+  padding: 7px 14px;
+  font-size: 12px;
+}
+.djep-specialsongbutton:hover,
+.djep-paginatebutton:hover {
+  background-color: var(--sde-gold-pale);
+  border-color: var(--sde-gold);
+  color: var(--sde-navy);
 }
 
 .djep-activepaginatebutton {
-  background-color: var(--sde-gold-wash);
-  border: 1px solid var(--sde-gold-leaf);
-  color: var(--sde-gold);
-  padding: 8px 15px;
+  background-color: var(--sde-gold);
+  border-color: var(--sde-gold);
+  color: var(--sde-text);
+  min-height: 34px;
+  padding: 7px 14px;
+  font-size: 12px;
 }
 
-/* Every button gets a visible keyboard focus ring */
+.djep-actionbutton:active,
+.djep-paymentbutton:active,
+.djep-planeventbutton:active,
+.djep-eventdetailsbutton:active { top: 1px; }
+
 .djep-actionbutton:focus-visible,
 .djep-paymentbutton:focus-visible,
 .djep-eventdetailsbutton:focus-visible,
@@ -2319,7 +2404,116 @@ a:hover { color: var(--sde-ink); }
 }
 
 /* --------------------------------------------------------------------------
-   6. Music lists — colored gradient headers become labeled cards
+   7. Countdown clock
+   Styles DJEP's own #djep-countdownclock element and its generated children.
+   Nothing here creates or hides the clock — it only skins what DJEP outputs,
+   so the live JS timer keeps running untouched.
+   -------------------------------------------------------------------------- */
+
+#djep-countdownclock {
+  display: block;
+  clear: both;
+  width: 100%;
+  margin: 8px auto 30px;
+  padding: 22px 20px 24px;
+  box-sizing: border-box;
+  background-color: var(--sde-paper);
+  border: 1px solid var(--sde-border);
+  border-radius: var(--sde-radius);
+  box-shadow: var(--sde-shadow-sm);
+  text-align: center;
+  font-family: var(--sde-sans);
+  color: var(--sde-navy);
+}
+
+/* Heading above the dials, if DJEP emits one */
+#djep-countdownclock h1,
+#djep-countdownclock h2,
+#djep-countdownclock h3,
+#djep-countdownclock .djep-countdowntitle {
+  font-family: var(--sde-serif);
+  font-weight: 600;
+  font-size: 21px;
+  color: var(--sde-navy);
+  margin: 0 0 18px;
+}
+
+/* Dials: four across on desktop, two-by-two on mobile.
+   Targets the immediate children generically, since DJEP's inner markup
+   varies by theme (div, span, or li). */
+#djep-countdownclock > div,
+#djep-countdownclock > ul,
+#djep-countdownclock > table,
+#djep-countdownclock > table > tbody > tr {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  border: 0;
+  background: none;
+}
+
+#djep-countdownclock > div > div,
+#djep-countdownclock > div > span,
+#djep-countdownclock > ul > li,
+#djep-countdownclock > table > tbody > tr > td {
+  flex: 0 0 calc(25% - 12px);
+  box-sizing: border-box;
+  min-width: 92px;
+  max-width: 128px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px;
+  background-color: var(--sde-paper);
+  border: 2px solid var(--sde-gold);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 4px var(--sde-ivory-2), var(--sde-shadow-sm);
+  font-family: var(--sde-serif);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.1;
+  color: var(--sde-navy);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* The small DAYS / HOURS / MINUTES / SECONDS caption inside each dial */
+#djep-countdownclock > div > div span,
+#djep-countdownclock > div > div small,
+#djep-countdownclock > ul > li span,
+#djep-countdownclock > ul > li small,
+#djep-countdownclock > table > tbody > tr > td span,
+#djep-countdownclock > table > tbody > tr > td small {
+  display: block;
+  font-family: var(--sde-sans);
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sde-gold-deep);
+}
+
+@media (max-width: 640px) {
+  #djep-countdownclock > div > div,
+  #djep-countdownclock > div > span,
+  #djep-countdownclock > ul > li,
+  #djep-countdownclock > table > tbody > tr > td {
+    flex: 0 0 calc(50% - 10px);   /* two-by-two on phones */
+    max-width: 132px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Music lists
    -------------------------------------------------------------------------- */
 
 .djep-playlistbox,
@@ -2334,8 +2528,8 @@ a:hover { color: var(--sde-ink); }
 .djep-playlistboxcustomtype3,
 .djep-playlistboxcustomtype4,
 .djep-playlistboxcustomtype5 {
-  background-color: var(--sde-wash-2);
-  border: 1px solid var(--sde-line);
+  background-color: var(--sde-ivory-2);
+  border: 1px solid var(--sde-border-soft);
   border-radius: 10px;
 }
 
@@ -2354,37 +2548,35 @@ a:hover { color: var(--sde-ink); }
   background: var(--sde-paper);
   background-image: none;
   filter: none;
-  border: 1px solid var(--sde-line) !important;
-  border-top-width: 2px !important;
-  border-top-color: var(--sde-gold-leaf) !important;
-  border-radius: 8px 8px 0 0;
+  border: 1px solid var(--sde-border-soft) !important;
+  border-top-width: 3px !important;
+  border-top-color: var(--sde-gold) !important;
+  border-radius: 9px 9px 0 0;
   height: auto;
-  min-height: 32px;
-  color: var(--sde-ink);
+  min-height: 34px;
+  color: var(--sde-navy);
   font-family: var(--sde-sans);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
-/* The three that carry real meaning keep a color, on the top edge only */
+/* The two that carry a real instruction keep a distinguishing edge */
 .djep-playlistboxmustplaytitle  { border-top-color: var(--sde-paid) !important; }
 .djep-playlistboxdonotplaytitle { border-top-color: var(--sde-alert) !important; }
-.djep-playlistboxplayifposstitle{ border-top-color: var(--sde-gold-leaf) !important; }
 
 .djep-playlisttitle,
-.djep-specialtitle { top: 7px; left: 14px; }
+.djep-specialtitle { top: 8px; left: 16px; }
 
-.djep-playlistlimits { color: var(--sde-faint); font-size: 11px; }
-
+.djep-playlistlimits { color: var(--sde-navy-soft); font-size: 11px; }
 .djep-playlistitemsaved { background-color: var(--sde-paid-wash); }
 
 /* --------------------------------------------------------------------------
-   7. Tables and data
+   9. Tables and data
    -------------------------------------------------------------------------- */
 
-.djep-odd  { background-color: var(--sde-wash-2); }
+.djep-odd  { background-color: var(--sde-ivory-2); }
 .djep-even { background-color: var(--sde-paper); }
 
 .djep-table-headers,
@@ -2392,35 +2584,34 @@ a:hover { color: var(--sde-ink); }
 .djep-databaseheader,
 .djep-form-sections {
   background-color: var(--sde-paper);
-  border-bottom: 1px solid var(--sde-line);
-  color: var(--sde-muted);
+  border-bottom: 2px solid var(--sde-border);
+  color: var(--sde-navy);
   font-family: var(--sde-sans);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
 .djep-databasebox {
-  background-color: var(--sde-wash-2);
-  border: 1px solid var(--sde-line);
-  border-radius: 8px;
-  color: var(--sde-ink);
+  background-color: var(--sde-ivory-2);
+  border: 1px solid var(--sde-border-soft);
+  border-radius: 9px;
+  color: var(--sde-text);
   font-size: 12px;
-  padding: 6px;
+  padding: 8px;
 }
 
-.djep-tablehover  { background-color: var(--sde-gold-wash); }
-.djep-tablehover1 { background-color: var(--sde-wash-2); }
+.djep-tablehover  { background-color: var(--sde-gold-pale); }
+.djep-tablehover1 { background-color: var(--sde-ivory-2); }
 
 .djep-musicresultstable td,
 .djep-planningformsbox td,
 .djep-timelinebox td,
 .djep-ourcontactinfobox td {
-  border-color: var(--sde-line-soft);
+  border-color: var(--sde-border-soft);
 }
 
-/* Dollar figures and times line up in columns */
 .djep-totalfeerow,
 .djep-totaldepositrow,
 .djep-balanceduerow,
@@ -2431,13 +2622,13 @@ a:hover { color: var(--sde-ink); }
 
 .djep-profilepicture {
   border-radius: 50%;
-  border: 1px solid var(--sde-gold-leaf);
+  border: 2px solid var(--sde-gold);
 }
 
 .djep-esigned { color: var(--sde-paid); }
 
 /* --------------------------------------------------------------------------
-   8. Forms
+   10. Forms
    -------------------------------------------------------------------------- */
 
 body.djep-body input[type="text"],
@@ -2449,20 +2640,20 @@ body.djep-body input[type="search"],
 body.djep-body select,
 body.djep-body textarea {
   background-color: var(--sde-paper);
-  border: 1px solid var(--sde-line);
+  border: 1px solid var(--sde-border);
   border-radius: 8px;
-  padding: 8px 10px;
+  padding: 9px 11px;
   font-family: var(--sde-sans);
   font-size: 14px;
-  color: var(--sde-ink);
+  color: var(--sde-text);
 }
 
 body.djep-body input:focus,
 body.djep-body select:focus,
 body.djep-body textarea:focus {
   outline: none;
-  border-color: var(--sde-gold-leaf);
-  box-shadow: 0 0 0 3px var(--sde-gold-wash);
+  border-color: var(--sde-gold);
+  box-shadow: 0 0 0 3px var(--sde-gold-pale);
 }
 
 .djep-form label {
@@ -2471,35 +2662,39 @@ body.djep-body textarea:focus {
   font-family: var(--sde-sans);
   font-size: 14px;
   font-weight: 600;
-  color: var(--sde-ink);
+  color: var(--sde-navy);
 }
 
 .djep-submit input {
   width: auto;
-  padding: 9px 18px;
-  background: var(--sde-ink);
-  border: 0;
-  border-radius: 8px;
+  min-height: 42px;
+  padding: 11px 20px;
+  background: var(--sde-navy);
+  border: 1px solid var(--sde-navy);
+  border-radius: var(--sde-btn-radius);
   font-family: var(--sde-sans);
   font-size: 14px;
   font-weight: 600;
-  color: var(--sde-paper);
+  color: #FFFFFF;
 }
-.djep-submit input:hover { background: var(--sde-gold); }
+.djep-submit input:hover { background: var(--sde-navy-deep); }
 
 /* --------------------------------------------------------------------------
-   9. Motion and print courtesies
+   11. Motion and print courtesies
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   #djep-navigation li a,
   .djep-actionbutton,
-  .djep-paymentbutton { transition: none !important; }
+  .djep-paymentbutton,
+  .djep-planeventbutton,
+  .djep-eventdetailsbutton { transition: none !important; }
 }
 
 @media print {
   #djep-navbar, .djep-logoutbutton, .djep-actionbutton { display: none !important; }
   #djep-content { border: 0; box-shadow: none; }
+  body.djep-body { background: #FFFFFF; }
 }
 
 /* ==========================================================================
@@ -2523,17 +2718,18 @@ body.djep-body textarea:focus {
     border-radius: 0;
     border-left: 0;
     border-right: 0;
-    padding: 6px 16px 24px;
+    padding: 10px 18px 28px;
   }
   #djep-navbar { padding: 0 10px; }
   #djep-navigation { flex-wrap: nowrap; overflow-x: auto; }
-  #djep-navigation li a { padding: 12px 12px 11px; white-space: nowrap; }
+  #djep-navigation li a { padding: 12px 13px 10px; white-space: nowrap; }
   h1.djep-h1 { font-size: 27px; }
   h2.djep-h2 { font-size: 21px; }
-  /* Bigger tap targets on a phone */
   .djep-actionbutton,
   .djep-paymentbutton,
-  .djep-guestsubmit { padding: 12px 18px; }
+  .djep-planeventbutton,
+  .djep-eventdetailsbutton,
+  .djep-guestsubmit { width: 100%; margin: 5px 0; }
 }
 
 /* --------------------------------------------------------------------------
