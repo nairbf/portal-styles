@@ -1977,6 +1977,10 @@ body.djep-body[style*="background-color:"] {
   background-color: var(--sde-ivory) !important;
 }
 
+/* If DJEP's Background -> Image is left set, a photo shows behind the
+   page. Set that field to the word `none` in DJEP; this is the backstop. */
+body.djep-body { background-image: none !important; }
+
 #djep-page  { background: transparent; }
 #djep-header{ padding: 20px 0 8px; background-color: transparent; }
 
@@ -2578,6 +2582,60 @@ strong, b { font-weight: 600; }
 }
 
 .djep-esigned { color: var(--sde-paid); }
+
+/* --------------------------------------------------------------------------
+   9b. Event date block (.calendar)
+   The last blue-grey element on the page — DJEP paints it with a #6086a6
+   gradient and a #05587e glow. Navy cap, white face, gold hairline.
+   -------------------------------------------------------------------------- */
+
+.calendar {
+  width: 78px;
+  background: var(--sde-paper);
+  background-image: none;
+  border: 1px solid var(--sde-border);
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow: var(--sde-shadow-sm);
+  -webkit-box-shadow: var(--sde-shadow-sm);
+  -moz-box-shadow: var(--sde-shadow-sm);
+  font-family: var(--sde-sans);
+}
+
+.calendar > .month {
+  background: var(--sde-navy);
+  background-image: none;
+  border-radius: 0;
+  padding: 4px 0 3px;
+  color: #FFFFFF;
+  font-family: var(--sde-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+
+.calendar > .day {
+  margin-bottom: 0;
+  padding: 4px 0 0;
+  border-radius: 0;
+  color: var(--sde-navy);
+  font-family: var(--sde-serif);
+  font-weight: 700;
+  font-size: 2em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.calendar > .year {
+  padding-bottom: 6px;
+  color: var(--sde-gold-deep);
+  font-family: var(--sde-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
 
 /* --------------------------------------------------------------------------
    10. Forms
