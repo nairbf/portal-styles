@@ -2375,8 +2375,8 @@ strong, b { font-weight: 600; }
   background-color: var(--sde-paper);
   border-color: var(--sde-border);
   color: var(--sde-navy);
-  min-height: 34px;
-  padding: 7px 14px;
+  min-height: 32px;
+  padding: 6px 12px;
   font-size: 12px;
 }
 .djep-specialsongbutton:hover,
@@ -2390,8 +2390,8 @@ strong, b { font-weight: 600; }
   background-color: var(--sde-gold);
   border-color: var(--sde-gold);
   color: var(--sde-text);
-  min-height: 34px;
-  padding: 7px 14px;
+  min-height: 32px;
+  padding: 6px 12px;
   font-size: 12px;
 }
 
@@ -3284,6 +3284,36 @@ body.djep-body textarea:focus {
   background-color: var(--sde-gold-pale);
 }
 
+/* ---- Pagination ----
+   DJEP inlines style="height:25px" on every *_pagination_results div, sized
+   for its original 2px-padding buttons. Larger buttons overflow it and land
+   on top of the results header row, so the container must size to content.
+   `display` is deliberately NOT set here: the inline style is display:none
+   until DJEP reveals it, and overriding that would force it always-visible. */
+div[id$="_pagination_results"] {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible;
+  margin: 6px 0 16px;
+}
+
+div[id$="_pagination_results"] .djep-paginatebutton,
+div[id$="_pagination_results"] .djep-activepaginatebutton {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 3px 4px 3px 0;
+}
+
+/* DJEP renders the «/Next » links with the A–Z letter class, so they must
+   not inherit the fixed letter box. */
+div[id$="_pagination_results"] .djep-artistsongbuttons,
+div[id$="_pagination_results"] .djep-artistsongbuttonswide {
+  width: auto;
+  min-width: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
 /* ---- Results table ---- */
 .djep-musicresultstable { width: 100%; }
 .djep-musicresultrow td,
@@ -3376,8 +3406,8 @@ body.djep-body textarea:focus {
 
   /* Fixed box (the original sets width:28px) so the two letter rows wrap to
      the same count per line instead of leaving orphans mid-row. */
-  .djep-artistsongbuttons,
-  .djep-artistsongbuttonswide {
+  .djep-tabs-all > table:first-of-type .djep-artistsongbuttons,
+  .djep-tabs-all > table:first-of-type .djep-artistsongbuttonswide {
     box-sizing: border-box;
     width: 40px;
     min-width: 0;
@@ -3387,7 +3417,7 @@ body.djep-body textarea:focus {
     font-size: 14px;
     line-height: 18px;
   }
-  .djep-artistsongbuttonswide { width: 56px; }
+  .djep-tabs-all > table:first-of-type .djep-artistsongbuttonswide { width: 56px; }
 
   /* Search row: label, field and button stack cleanly. */
   .djep-musicsearchform { max-width: 100%; width: 100%; }
@@ -3437,8 +3467,8 @@ body.djep-body textarea:focus {
 
 /* Very narrow phones */
 @media (max-width: 380px) {
-  .djep-artistsongbuttons { min-width: 34px; padding: 9px 4px; font-size: 13px; }
-  .djep-artistsongbuttonswide { min-width: 48px; }
+  .djep-tabs-all > table:first-of-type .djep-artistsongbuttons { width: 34px; padding: 9px 0; font-size: 13px; }
+  .djep-tabs-all > table:first-of-type .djep-artistsongbuttonswide { width: 48px; }
   #djep-content, #djep-guestrequestcontent { padding-left: 12px; padding-right: 12px; }
 }
 
