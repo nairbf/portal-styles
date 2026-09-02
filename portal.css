@@ -1970,7 +1970,12 @@ body.djep-body {
   -webkit-font-smoothing: antialiased;
 }
 
-body.djep-body[style*="background-color:"] { background-color: var(--sde-ivory); }
+/* The portal prints style="background-color:#FFFFFF" inline on <body>.
+   Inline wins over author CSS, so this needs !important to take. */
+body.djep-body,
+body.djep-body[style*="background-color:"] {
+  background-color: var(--sde-ivory) !important;
+}
 
 #djep-page  { background: transparent; }
 #djep-header{ padding: 20px 0 8px; background-color: transparent; }
@@ -2405,111 +2410,58 @@ strong, b { font-weight: 600; }
 
 /* --------------------------------------------------------------------------
    7. Countdown clock
-   Styles DJEP's own #djep-countdownclock element and its generated children.
-   Nothing here creates or hides the clock — it only skins what DJEP outputs,
-   so the live JS timer keeps running untouched.
+   Real markup (verified from the live page):
+     #djep-countdownclock
+       p.djep-titlebar            "Countdown To Your Next Event"
+       #ring_timer.countdownclock
+         canvas                   <- drawn by ringer.init() in javascript.asp
+
+   The four rings are painted INTO the canvas by JS, so their colors, numbers
+   and labels cannot be reached from CSS at all. This styles the frame around
+   them and leaves the canvas and its live timer completely alone.
+   To recolor the rings themselves see countdown-colors.js in this repo.
    -------------------------------------------------------------------------- */
 
 #djep-countdownclock {
   display: block;
   clear: both;
   width: 100%;
-  margin: 8px auto 30px;
-  padding: 22px 20px 24px;
   box-sizing: border-box;
-  background-color: var(--sde-paper);
-  border: 1px solid var(--sde-border);
+  margin: 30px auto;
+  padding: 4px 20px 10px;
+  background-color: var(--sde-ivory-2);
+  border: 1px solid var(--sde-border-soft);
   border-radius: var(--sde-radius);
-  box-shadow: var(--sde-shadow-sm);
-  text-align: center;
-  font-family: var(--sde-sans);
-  color: var(--sde-navy);
-}
-
-/* Heading above the dials, if DJEP emits one */
-#djep-countdownclock h1,
-#djep-countdownclock h2,
-#djep-countdownclock h3,
-#djep-countdownclock .djep-countdowntitle {
-  font-family: var(--sde-serif);
-  font-weight: 600;
-  font-size: 21px;
-  color: var(--sde-navy);
-  margin: 0 0 18px;
-}
-
-/* Dials: four across on desktop, two-by-two on mobile.
-   Targets the immediate children generically, since DJEP's inner markup
-   varies by theme (div, span, or li). */
-#djep-countdownclock > div,
-#djep-countdownclock > ul,
-#djep-countdownclock > table,
-#djep-countdownclock > table > tbody > tr {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 16px;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-  border: 0;
-  background: none;
-}
-
-#djep-countdownclock > div > div,
-#djep-countdownclock > div > span,
-#djep-countdownclock > ul > li,
-#djep-countdownclock > table > tbody > tr > td {
-  flex: 0 0 calc(25% - 12px);
-  box-sizing: border-box;
-  min-width: 92px;
-  max-width: 128px;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 10px;
-  background-color: var(--sde-paper);
-  border: 2px solid var(--sde-gold);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 4px var(--sde-ivory-2), var(--sde-shadow-sm);
-  font-family: var(--sde-serif);
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 1.1;
-  color: var(--sde-navy);
-  font-variant-numeric: tabular-nums;
   text-align: center;
 }
 
-/* The small DAYS / HOURS / MINUTES / SECONDS caption inside each dial */
-#djep-countdownclock > div > div span,
-#djep-countdownclock > div > div small,
-#djep-countdownclock > ul > li span,
-#djep-countdownclock > ul > li small,
-#djep-countdownclock > table > tbody > tr > td span,
-#djep-countdownclock > table > tbody > tr > td small {
+/* Its heading is a .djep-titlebar, already styled in section 4 — just centre
+   it and pull it in from the card edge. */
+#djep-countdownclock .djep-titlebar {
+  margin: 6px auto 0;
+  text-align: center;
+  border-bottom-color: var(--sde-border);
+}
+
+#ring_timer.countdownclock {
   display: block;
-  font-family: var(--sde-sans);
-  font-weight: 600;
-  font-size: 10px;
-  line-height: 1.3;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--sde-gold-deep);
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* DJEP's own style.asp already sets `canvas {width:90% !important;
+   margin:40px auto}`. Don't fight it — just stop it overflowing on a phone
+   and tighten the very generous top margin. */
+#djep-countdownclock canvas {
+  max-width: 100%;
+  height: auto;
+  margin: 18px auto 10px !important;
 }
 
 @media (max-width: 640px) {
-  #djep-countdownclock > div > div,
-  #djep-countdownclock > div > span,
-  #djep-countdownclock > ul > li,
-  #djep-countdownclock > table > tbody > tr > td {
-    flex: 0 0 calc(50% - 10px);   /* two-by-two on phones */
-    max-width: 132px;
-  }
+  #djep-countdownclock { padding: 4px 8px 8px; }
+  #djep-countdownclock canvas { margin: 10px auto 6px !important; }
 }
 
 /* --------------------------------------------------------------------------
