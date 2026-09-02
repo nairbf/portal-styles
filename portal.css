@@ -660,7 +660,7 @@ color:#000;
 	width:280px;
 	margin:2px auto 0;
 	border: 1px solid #AAA;
-	background: #CCC url(../images/ui-bg_highlight-soft_75_cccccc_1x100.png) center repeat-x;
+	background: #CCC url(https://planning.signaturedjevents.com/clients/images/ui-bg_highlight-soft_75_cccccc_1x100.png) center repeat-x;
 	border-radius: 4px;
 	height:34px;
 }
@@ -723,7 +723,7 @@ color:#000;
 	width:280px;
 	margin:2px auto 0;
 border: 1px solid #AAA;
-background: #CCC url(../images/ui-bg_highlight-soft_75_cccccc_1x100.png) center repeat-x;
+background: #CCC url(https://planning.signaturedjevents.com/clients/images/ui-bg_highlight-soft_75_cccccc_1x100.png) center repeat-x;
 border-radius: 4px;
 	height:34px;
 	font-family:Arial, Helvetica, sans-serif;
@@ -878,14 +878,14 @@ text-align:right;
 }
 
 .djep-dragtoplaylist {
-    background-image: url(../images/dragimage.png);
+    background-image: url(https://planning.signaturedjevents.com/clients/images/dragimage.png);
     background-repeat: no-repeat;
     height: 70px;
     width: 173px;
 }
 
 .djep-playlistitemsaved {
-    background-image: url(../images/savedmusic.png);
+    background-image: url(https://planning.signaturedjevents.com/clients/images/savedmusic.png);
     position: absolute;
     left: 45px;
     top: 20px;
@@ -893,7 +893,7 @@ text-align:right;
     width: 173px;
 }
 
-tr[id*="draggable_"] {cursor: url(../images/openhand.cur), default !important; /* Forces a custom hand icon to indicate drag and drop*/}
+tr[id*="draggable_"] {cursor: url(https://planning.signaturedjevents.com/clients/images/openhand.cur), default !important; /* Forces a custom hand icon to indicate drag and drop*/}
 tr[id*="song_row_for_songid"] > td {
 	padding:0 3px !important;
 }
@@ -1587,7 +1587,7 @@ djep-SubmitHide {display: none;}
 	height:16px;
 	font-weight:bold;
 	text-decoration:none;
-	background-image: url(../images/padlock_closed.png);
+	background-image: url(https://planning.signaturedjevents.com/clients/images/padlock_closed.png);
 	background-size: 12px;
 	background-repeat:no-repeat;
 	background-position: 5px 5px ;
@@ -1644,7 +1644,7 @@ textarea#djep-timelineheadline {
     width: 220px;
     text-align: left;
     text-decoration: none;
-    cursor: url(../images/openhand.cur), default !important;
+    cursor: url(https://planning.signaturedjevents.com/clients/images/openhand.cur), default !important;
 }
 
 .djep-timelineitems:hover {
@@ -1754,7 +1754,7 @@ textarea#djep-timelineheadline {
 	top:1px;
 }
 
-.ui-progressbar-value { background-image: url(../includes/smoothness/images/uipattern4.png) !important; }
+.ui-progressbar-value { background-image: url(https://planning.signaturedjevents.com/clients/includes/smoothness/images/uipattern4.png) !important; }
 #djep-progressbartitle {
 	font-size:24px;
 	color:#060;
@@ -1791,19 +1791,19 @@ textarea#djep-timelineheadline {
 	display:inline-block;
 }
 #djep-addsongimage a {
-	background: url('../images/musicrequests_addsong.png');
+	background: url('https://planning.signaturedjevents.com/clients/images/musicrequests_addsong.png');
 }
 #djep-musicrequestsimage a{
-	background: url('../images/musicrequests.png');
+	background: url('https://planning.signaturedjevents.com/clients/images/musicrequests.png');
 }
 #djep-specialsongsimage a {
-	background: url('../images/musicrequests_special.png');
+	background: url('https://planning.signaturedjevents.com/clients/images/musicrequests_special.png');
 }
 #djep-printrequestsimage a{
-	background: url('../images/musicrequests_print.png');
+	background: url('https://planning.signaturedjevents.com/clients/images/musicrequests_print.png');
 }
 #djep-guestrequestsimage a{
-	background: url('../images/musicrequests_guests.png');
+	background: url('https://planning.signaturedjevents.com/clients/images/musicrequests_guests.png');
 }
 /* Mobile CSS */
 
@@ -2410,6 +2410,59 @@ strong, b { font-weight: 600; }
 .djep-guestlogout:focus-visible {
   outline: 2px solid var(--sde-gold);
   outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   6b. Music request tiles
+   #djep-addsongimage a, #djep-musicrequestsimage a, #djep-specialsongsimage a,
+   #djep-printrequestsimage a, #djep-guestrequestsimage a are 150x150 <a>
+   elements whose only content is a background PNG. Framed, not replaced —
+   the artwork carries its own label, so nothing is added on top of it.
+   -------------------------------------------------------------------------- */
+
+#djep-addsongimage a,
+#djep-musicrequestsimage a,
+#djep-specialsongsimage a,
+#djep-printrequestsimage a,
+#djep-guestrequestsimage a {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 132px 132px;
+  border: 1px solid var(--sde-border);
+  border-radius: 12px;
+  box-shadow: var(--sde-shadow-sm);
+  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+#djep-addsongimage a:hover,
+#djep-musicrequestsimage a:hover,
+#djep-specialsongsimage a:hover,
+#djep-printrequestsimage a:hover,
+#djep-guestrequestsimage a:hover {
+  border-color: var(--sde-gold);
+  background-color: var(--sde-gold-pale);
+  box-shadow: var(--sde-shadow);
+}
+
+#djep-addsongimage a:focus-visible,
+#djep-musicrequestsimage a:focus-visible,
+#djep-specialsongsimage a:focus-visible,
+#djep-printrequestsimage a:focus-visible,
+#djep-guestrequestsimage a:focus-visible {
+  outline: 2px solid var(--sde-gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  #djep-addsongimage a,
+  #djep-musicrequestsimage a,
+  #djep-specialsongsimage a,
+  #djep-printrequestsimage a,
+  #djep-guestrequestsimage a {
+    height: 112px;
+    width: 112px;
+    background-size: 96px 96px;
+  }
 }
 
 /* --------------------------------------------------------------------------
