@@ -2940,6 +2940,374 @@ body.djep-body textarea:focus {
   body.djep-body { background: #FFFFFF; }
 }
 
+/* --------------------------------------------------------------------------
+   13. Select Your Music
+   Layout: table.djep-selectmusictable — left cell = jQuery UI tabs (#tabs),
+   right cell (width="295") = jQuery UI accordion (#requests_accordion).
+   jquery_ui.css loads AFTER this file, so every .ui-* rule below is written
+   at higher specificity (id-scoped) rather than relying on source order.
+   -------------------------------------------------------------------------- */
+
+/* ---- Search tabs ---- */
+#tabs.ui-tabs {
+  padding: 0;
+  background: none;
+  background-image: none;
+  border: 0;
+  border-radius: 0;
+}
+
+#tabs > .ui-tabs-nav.ui-widget-header {
+  padding: 0;
+  margin: 0 0 18px;
+  background: none;
+  background-image: none;
+  border: 0;
+  border-bottom: 1px solid var(--sde-border);
+  border-radius: 0;
+}
+
+#tabs > .ui-tabs-nav > li {
+  float: none;
+  display: inline-block;
+  top: 0;
+  margin: 0 2px 0 0;
+  padding: 0;
+  background: none;
+  background-image: none;
+  border: 0;
+  border-radius: 0;
+  white-space: nowrap;
+}
+
+#tabs > .ui-tabs-nav > li > a.ui-tabs-anchor {
+  float: none;
+  display: inline-block;
+  padding: 12px 16px 10px;
+  border-bottom: 3px solid transparent;
+  border-radius: 8px 8px 0 0;
+  font-family: var(--sde-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--sde-navy);
+  transition: background-color .18s ease, border-color .18s ease;
+}
+
+#tabs > .ui-tabs-nav > li:not(.ui-tabs-active) > a.ui-tabs-anchor:hover {
+  background-color: var(--sde-gold-pale);
+  border-bottom-color: var(--sde-border);
+}
+
+#tabs > .ui-tabs-nav > li.ui-tabs-active {
+  background: none;
+  border: 0;
+  padding-bottom: 0;
+}
+
+#tabs > .ui-tabs-nav > li.ui-tabs-active > a.ui-tabs-anchor {
+  background-color: var(--sde-gold-pale);
+  border-bottom-color: var(--sde-gold);
+  color: var(--sde-navy);
+}
+
+#tabs > .ui-tabs-panel.djep-tabs-all {
+  padding: 0;
+  background: none;
+  background-image: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--sde-text);
+  font-family: var(--sde-sans);
+}
+
+/* ---- A–Z index ---- */
+.djep-artistsongbuttons,
+.djep-artistsongbuttonswide {
+  background: none;
+  background-image: none;
+  background-color: var(--sde-paper);
+  filter: none;
+  border: 1px solid var(--sde-border);
+  border-radius: 7px;
+  box-shadow: none;
+  text-shadow: none;
+  color: var(--sde-navy);
+  font-family: var(--sde-sans);
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 32px;
+  padding: 7px 4px;
+  margin: 2px;
+  text-align: center;
+  /* The original dims every letter to opacity .4 until hover — navy at 40%
+     lands near #A8B2B8 and fails contrast. Full strength; hover carries the
+     emphasis instead. */
+  opacity: 1;
+  filter: none;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.djep-artistsongbuttonswide { min-width: 52px; }
+
+/* jquery_ui.css sets `.ui-widget-content a {color:...}` (0,1,1) and loads after
+   this file, which greyed the letters out. Id-scoped here to win. */
+#tabs a.djep-artistsongbuttons,
+#tabs a.djep-artistsongbuttonswide,
+.djep-tabs-all a.djep-artistsongbuttons,
+.djep-tabs-all a.djep-artistsongbuttonswide {
+  color: var(--sde-navy);
+  text-decoration: none;
+}
+
+#tabs a.djep-artistsongbuttons:hover,
+#tabs a.djep-artistsongbuttonswide:hover,
+.djep-tabs-all a.djep-artistsongbuttons:hover,
+.djep-tabs-all a.djep-artistsongbuttonswide:hover { color: #FFFFFF; }
+
+.djep-artistsongbuttons:hover,
+.djep-artistsongbuttonswide:hover {
+  background: none;
+  background-image: none;
+  background-color: var(--sde-navy);
+  filter: none;
+  opacity: 1;
+  border-color: var(--sde-navy);
+  color: #FFFFFF;
+}
+
+.djep-artistsongbuttons:focus-visible,
+.djep-artistsongbuttonswide:focus-visible {
+  outline: 2px solid var(--sde-gold);
+  outline-offset: 2px;
+}
+
+/* ---- Search field ---- */
+.djep-musicsearchform {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  min-height: 42px;
+  border: 1px solid var(--sde-border);
+  border-width: 1px;
+  border-color: var(--sde-border);
+  border-radius: 9px;
+  padding: 9px 12px;
+  text-indent: 0;
+  font-family: var(--sde-sans);
+  font-size: 15px !important;
+  font-weight: 500;
+  color: var(--sde-text);
+}
+.djep-musicsearchform::placeholder { color: var(--sde-faint); font-weight: 400; }
+
+/* ---- Instructions note (DJEP inlines grey + dashed border) ---- */
+.djep-tabs-all div[style*="dashed"] {
+  width: auto !important;
+  max-width: 520px;
+  background: var(--sde-ivory-2) !important;
+  border: 1px solid var(--sde-border-soft) !important;
+  border-left: 3px solid var(--sde-gold) !important;
+  border-radius: 10px !important;
+  padding: 14px 16px !important;
+  color: var(--sde-text) !important;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.djep-tabs-all div[style*="dashed"] strong { color: var(--sde-navy); }
+
+/* ---- "Your Requests" column header ---- */
+.djep-requestonlytitle {
+  width: auto;
+  height: auto;
+  margin: 0 auto 14px;
+  padding: 10px 14px;
+  background: var(--sde-navy);
+  background-image: none;
+  border: 1px solid var(--sde-navy);
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-family: var(--sde-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.djep-requestonlytitle > p { margin: 0; }
+
+/* ---- Playlist accordion ---- */
+#requests_accordion { width: 100% !important; }
+
+#requests_accordion > .ui-accordion-header {
+  position: relative;
+  margin: 0 0 8px;
+  padding: 12px 40px 12px 16px;
+  height: auto;
+  min-height: 0;
+  background: var(--sde-paper);
+  background-image: none;
+  filter: none;
+  border: 1px solid var(--sde-border-soft) !important;
+  border-left: 3px solid var(--sde-gold) !important;
+  border-radius: 10px !important;
+  color: var(--sde-navy);
+  font-family: var(--sde-sans);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease;
+}
+
+#requests_accordion > .ui-accordion-header:hover {
+  background: var(--sde-gold-pale);
+  border-color: var(--sde-border) !important;
+}
+
+#requests_accordion > .ui-accordion-header-active {
+  background: var(--sde-gold-pale);
+  border-color: var(--sde-gold) !important;
+  border-radius: 10px 10px 0 0 !important;
+  margin-bottom: 0;
+}
+
+/* The one list whose meaning is a warning. NOTE: this portal's playlist slots
+   are renamed, so the class names no longer match the labels — the DNP class
+   is labelled "Slow Songs", and the real "Do Not Play" list is CR3. Keyed to
+   the header id, which is stable. If the playlists are renamed or reordered
+   in DJEP, update this one selector. */
+#request_table_title_div_CR3.ui-accordion-header {
+  border-left-color: var(--sde-alert) !important;
+}
+#request_table_title_div_CR3 .djep-playlisttitle { color: var(--sde-alert); }
+
+#requests_accordion > .ui-accordion-header .djep-playlisttitle {
+  position: static;
+  top: auto;
+  left: auto;
+  font-family: var(--sde-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sde-navy);
+}
+
+#requests_accordion > .ui-accordion-header .djep-playlistlimits {
+  float: none;
+  position: absolute;
+  right: 38px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 1px 8px;
+  border-radius: 20px;
+  background: var(--sde-gold-wash);
+  color: var(--sde-gold-deep);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* replace the jQuery UI sprite triangle with a CSS chevron */
+#requests_accordion > .ui-accordion-header > .ui-accordion-header-icon {
+  width: 9px;
+  height: 9px;
+  right: 16px;
+  left: auto;
+  margin-top: -6px;
+  background: none !important;
+  background-image: none !important;
+  text-indent: 0;
+  border-right: 2px solid var(--sde-gold-deep);
+  border-bottom: 2px solid var(--sde-gold-deep);
+  transform: rotate(45deg);
+  transition: transform .18s ease;
+}
+#requests_accordion > .ui-accordion-header-active > .ui-accordion-header-icon {
+  transform: rotate(-135deg);
+  margin-top: -2px;
+}
+
+#requests_accordion > .ui-accordion-content {
+  margin: 0 0 8px;
+  background: var(--sde-paper);
+  border: 1px solid var(--sde-gold) !important;
+  border-top: 0 !important;
+  border-radius: 0 0 10px 10px !important;
+}
+
+/* the drop targets keep only the faintest tint */
+#requests_accordion .djep-playlistboxmustplay,
+#requests_accordion .djep-playlistboxdonotplay,
+#requests_accordion .djep-playlistboxplayifposs,
+#requests_accordion .djep-playlistboxdedications,
+#requests_accordion .djep-playlistboxonlyrequest,
+#requests_accordion .djep-playlistboxguests,
+#requests_accordion .djep-playlistboxcustomtype1,
+#requests_accordion .djep-playlistboxcustomtype2,
+#requests_accordion .djep-playlistboxcustomtype3,
+#requests_accordion .djep-playlistboxcustomtype4,
+#requests_accordion .djep-playlistboxcustomtype5 {
+  background-color: var(--sde-ivory-2);
+  border-radius: 0 0 9px 9px;
+}
+
+.djep-playlist-listing td { font-size: 13px; color: var(--sde-text); }
+
+/* ---- Running total ---- */
+.djep-playlistlimits,
+.djep-musiccounterspan,
+.djep-playlistcounterspan { font-family: var(--sde-sans); }
+
+/* ---- Running total ---- */
+.djep-requestlimitbox {
+  margin-top: 12px;
+  padding: 4px 6px;
+  background: var(--sde-paper);
+  border: 1px solid var(--sde-border-soft);
+  border-radius: 10px;
+  font-family: var(--sde-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sde-navy-soft);
+}
+.djep-requestlimitbox #playlist_counter_span_ALL { color: var(--sde-gold-deep); }
+
+/* An open, empty playlist should look like somewhere to drop a song. */
+#requests_accordion .ui-accordion-content .ui-droppable {
+  border: 1px dashed var(--sde-border);
+  border-radius: 8px;
+  margin: 8px;
+}
+#requests_accordion .ui-accordion-content .ui-droppable.ui-state-hover,
+#requests_accordion .ui-accordion-content .ui-droppable:hover {
+  border-color: var(--sde-gold);
+  background-color: var(--sde-gold-pale);
+}
+
+/* ---- Results table ---- */
+.djep-musicresultstable { width: 100%; }
+.djep-musicresultrow td,
+.djep-musicresultrowmobile td { font-size: 13.5px; }
+
+/* ---- Two-column layout: stack on narrow screens ---- */
+@media (max-width: 900px) {
+  .djep-selectmusictable,
+  .djep-selectmusictable > tbody,
+  .djep-selectmusictable > tbody > tr { display: block; width: 100% !important; }
+
+  .djep-selectmusictable > tbody > tr > td {
+    display: block;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* requests column moves under the search results */
+  .djep-selectmusictable > tbody > tr > td + td { margin-top: 26px; }
+
+  #tabs > .ui-tabs-nav { overflow-x: auto; white-space: nowrap; }
+  .djep-musicsearchform { max-width: 100%; }
+  .djep-artistsongbuttons,
+  .djep-artistsongbuttonswide { min-width: 30px; font-size: 13px; padding: 8px 3px; }
+}
+
 /* ==========================================================================
    OPTIONAL — FLUID WIDTH
    The original locks #djep-content to 800px and marks it "VERY IMPORTANT - DNE".
