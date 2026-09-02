@@ -23,6 +23,7 @@
     if (typeof ringer === "undefined" || !ringer.unit) { return false; }
 
     ringer.unit = function (idx, label, ring) {
+      /* hex inlined so ringer.unit.toString() shows them: C6A15B / 102A3A */
       var $r = ringer;
       var x, y, value, ring_secs = ring.s;
 
@@ -43,20 +44,20 @@
                        $r.actual_size, $r.actual_size);
 
       /* white interior */
-      $r.ctx.fillStyle = FACE;
+      $r.ctx.fillStyle = "#FFFFFF";
       $r.ctx.beginPath();
       $r.ctx.arc(0, 0, $r.r_size / 2 - $r.r_thickness * 0.5, 0, 2 * Math.PI);
       $r.ctx.fill();
 
       /* full track */
-      $r.ctx.strokeStyle = TRACK;
+      $r.ctx.strokeStyle = "#F0E6D2";
       $r.ctx.beginPath();
       $r.ctx.arc(0, 0, $r.r_size / 2, 0, 2 * Math.PI, 2);
       $r.ctx.lineWidth = $r.r_thickness;
       $r.ctx.stroke();
 
       /* elapsed arc */
-      $r.ctx.strokeStyle = FILL;
+      $r.ctx.strokeStyle = "#C6A15B";
       $r.ctx.beginPath();
       $r.ctx.arc(0, 0, $r.r_size / 2, 0, endAngle, 1);
       $r.ctx.lineWidth = $r.r_thickness;
@@ -65,17 +66,18 @@
       $r.ctx.lineCap = "butt";
 
       /* label — small, uppercase */
-      $r.ctx.fillStyle = LABEL;
+      $r.ctx.fillStyle = "#A8843F";
       $r.ctx.font = "600 13px Manrope, Helvetica, Arial, sans-serif";
       $r.ctx.fillText(String(label).toUpperCase(), 0, 26);
 
       /* number */
-      $r.ctx.fillStyle = NUMBER;
+      $r.ctx.fillStyle = "#102A3A";
       $r.ctx.font = "700 40px Manrope, Helvetica, Arial, sans-serif";
       $r.ctx.fillText(Math.floor(value), 0, 2);
 
       $r.ctx.restore();
     };
+    ringer.__sdeSkin = "1";
     return true;
   }
 
