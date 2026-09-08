@@ -3525,9 +3525,9 @@ div[id$="_pagination_results"] .djep-artistsongbuttonswide {
 
 /* ==========================================================================
    15. PAYMENT
-   Works with the payment module in portal-enhancements.js. The quick-amount
-   buttons and the "or pay another way" row are injected by that script; the
-   rest restyles DJEP's own payment markup.
+   Pure CSS over DJEP's own payment markup — the gateway chooser, the amount
+   screen, and the fee notice. No behaviour is changed: the three-step flow
+   is exactly as DJEP ships it.
    ========================================================================== */
 
 /* ---- Gateway chooser (shown only if the skip is turned off) ---- */
@@ -3542,7 +3542,10 @@ div[id$="_pagination_results"] .djep-artistsongbuttonswide {
   box-shadow: var(--sde-shadow-sm);
 }
 
-.djep-paywithbutton {
+/* The chooser page prints its own <style> for .djep-paywithbutton in the body,
+   i.e. after this stylesheet, at the same specificity — so it wins on source
+   order. Scoped to the box here to outrank it. */
+.djep-makepaymentbox .djep-paywithbutton {
   display: block;
   box-sizing: border-box;
   margin: 10px auto;
@@ -3558,13 +3561,13 @@ div[id$="_pagination_results"] .djep-artistsongbuttonswide {
   text-align: center;
   transition: border-color .18s ease, background-color .18s ease;
 }
-.djep-paywithbutton:hover {
+.djep-makepaymentbox .djep-paywithbutton:hover {
   background: var(--sde-gold-pale);
   background-image: none;
   filter: none;
   border-color: var(--sde-gold);
 }
-.djep-paywithbutton img { max-height: 30px; width: auto; }
+.djep-makepaymentbox .djep-paywithbutton img { max-height: 30px; width: auto; }
 
 /* ---- Amount page ---- */
 .djep-innercontentdiv { padding: 4px 0 0; }
@@ -3613,113 +3616,8 @@ input#amountdollars:focus {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- Injected: quick-amount buttons ---- */
-#sde-quickpay { margin: 4px 0 22px; }
-
-.sde-quickpay-label,
-.sde-alt-label {
-  font-family: var(--sde-sans);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--sde-navy-soft);
-  margin-bottom: 10px;
-}
-
-.sde-quickpay-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.sde-quickpay-btn {
-  flex: 1 1 150px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  min-height: 68px;
-  padding: 12px 14px;
-  background: var(--sde-paper);
-  border: 1px solid var(--sde-border);
-  border-radius: var(--sde-btn-radius);
-  font-family: var(--sde-sans);
-  color: var(--sde-navy);
-  cursor: pointer;
-  transition: background-color .18s ease, border-color .18s ease,
-              box-shadow .18s ease;
-}
-.sde-quickpay-btn .sde-qp-title { font-size: 14px; font-weight: 700; }
-.sde-quickpay-btn .sde-qp-sub {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--sde-gold-deep);
-  font-variant-numeric: tabular-nums;
-}
-
-.sde-quickpay-btn.is-primary {
-  background: var(--sde-gold);
-  border-color: var(--sde-gold);
-  color: var(--sde-text);
-}
-.sde-quickpay-btn.is-primary .sde-qp-sub { color: var(--sde-navy); }
-
-.sde-quickpay-btn.is-ghost { flex: 1 1 120px; min-height: 58px; }
-.sde-quickpay-btn.is-ghost .sde-qp-title { font-size: 13px; font-weight: 600; }
-.sde-quickpay-btn.is-ghost .sde-qp-sub { color: var(--sde-navy-soft); font-weight: 500; }
-
-.sde-quickpay-btn:hover {
-  border-color: var(--sde-gold);
-  box-shadow: var(--sde-shadow-sm);
-}
-.sde-quickpay-btn.is-selected {
-  border-color: var(--sde-navy);
-  box-shadow: 0 0 0 2px var(--sde-navy) inset;
-}
-.sde-quickpay-btn:focus-visible {
-  outline: 2px solid var(--sde-gold);
-  outline-offset: 2px;
-}
-
-/* ---- Injected: other payment methods ---- */
-#sde-alt-pay {
-  margin-top: 26px;
-  padding-top: 18px;
-  border-top: 1px solid var(--sde-border-soft);
-  text-align: center;
-}
-.sde-alt-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-}
-.sde-alt-link {
-  display: inline-block;
-  padding: 9px 16px;
-  min-height: 40px;
-  box-sizing: border-box;
-  line-height: 22px;
-  background: var(--sde-paper);
-  border: 1px solid var(--sde-border-soft);
-  border-radius: 20px;
-  font-family: var(--sde-sans);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--sde-navy-soft);
-  text-decoration: none;
-  transition: border-color .18s ease, color .18s ease;
-}
-.sde-alt-link:hover {
-  border-color: var(--sde-gold);
-  color: var(--sde-navy);
-}
-
 @media (max-width: 700px) {
   .djep-makepaymentbox { padding: 18px 14px 20px; }
-  .sde-quickpay-btn { flex: 1 1 100%; }
+  .djep-makepaymentbox .djep-paywithbutton { max-width: 100%; }
   input#amountdollars { max-width: 100%; }
 }
