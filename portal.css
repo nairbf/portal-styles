@@ -3621,3 +3621,113 @@ input#amountdollars:focus {
   .djep-makepaymentbox .djep-paywithbutton { max-width: 100%; }
   input#amountdollars { max-width: 100%; }
 }
+
+/* ==========================================================================
+   16. STRIPE CARD PANEL  (makeapayment.asp -> stripe-paymentdetails)
+   DJEP renders a fake credit-card graphic, #maincarddiv, and swaps its
+   background per detected brand: .gr-visa (blue), .gr-mastercard, .gr-aexpress,
+   .gr-discover. One navy panel instead, so it stops changing colour mid-typing.
+
+   The card fields are Stripe Elements in cross-origin iframes. The text the
+   client types is set in DJEP's JS as color:'#3b721b' (dark green) and cannot
+   be reached from CSS — so the field wrappers MUST stay light or that text
+   becomes unreadable. Do not darken .gr-input.
+
+   Selectors are id-scoped: the .gr-* rules live in an inline <style> in the
+   body, i.e. after this file, so equal specificity would lose on source order.
+   ========================================================================== */
+
+#maincarddiv.credit-card,
+#maincarddiv.cardbox,
+#maincarddiv.gr-visa,
+#maincarddiv.gr-mastercard,
+#maincarddiv.gr-aexpress,
+#maincarddiv.gr-discover {
+  background: var(--sde-navy) !important;
+  background-image: none !important;
+  filter: none !important;
+  border: 1px solid var(--sde-gold);
+  border-radius: 14px;
+  box-shadow: var(--sde-shadow);
+  max-width: 460px;
+  padding: 24px 24px 10px;
+  margin: 22px auto 18px;
+  color: #FFFFFF;
+}
+
+/* The empty <h2>&nbsp;</h2> is a spacer; padding above does that job. */
+#maincarddiv > h2 { display: none; }
+#maincarddiv .inputs { margin-top: 4px; padding-left: 0; }
+
+#maincarddiv label {
+  color: var(--sde-gold);
+  font-family: var(--sde-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: none;
+  margin-bottom: 7px;
+}
+
+/* Field wrappers stay light — Stripe's typed text is dark. */
+#maincarddiv .gr-input {
+  background: #FFFFFF !important;
+  background-image: none !important;
+  filter: none !important;
+  border: 1px solid var(--sde-border-soft);
+  border-radius: 9px;
+  box-shadow: none;
+  padding: 12px 12px;
+  min-height: 46px;
+  box-sizing: border-box;
+}
+
+#maincarddiv .gr-input.focus {
+  border-color: var(--sde-gold);
+  box-shadow: 0 0 0 3px rgba(198, 161, 91, 0.28);
+}
+#maincarddiv .gr-input.invalid { border-color: var(--sde-alert); }
+
+/* Apple Pay button: match the card's width so the two line up. */
+#inner-payment-request-button {
+  width: 100% !important;
+  max-width: 460px !important;
+  margin: 6px auto 4px !important;
+}
+#payment-request-button { max-width: 460px; margin: 0 auto; }
+
+/* Stripe's error text */
+#card-errors {
+  max-width: 460px;
+  margin: 0 auto 16px;
+  padding: 11px 14px;
+  background: var(--sde-alert-wash);
+  border: 1px solid var(--sde-border-soft);
+  border-left: 3px solid var(--sde-alert);
+  border-radius: 9px;
+  color: var(--sde-alert);
+  font-family: var(--sde-sans);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  #maincarddiv.credit-card { padding: 18px 16px 8px; max-width: 100%; }
+  /* DJEP floats expiry at 62% and CVC at 25%; give them room on a phone. */
+  #maincarddiv .inputs li.expire { width: 58%; margin-right: 6%; }
+  #maincarddiv .inputs li.cvc-code { width: 36%; }
+}
+
+/* Billing details below the card */
+#djep-billingcheckbox .form-control,
+#djep-billingcheckbox input[type="text"],
+#djep-billingcheckbox select {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 460px;
+  min-height: 44px;
+}
+#djep-billingcheckbox .radiodiv { margin: 6px 0; }
+#djep-billingcheckbox .radiodiv label,
+#djep-billingcheckbox .address_padding { color: var(--sde-navy); }
